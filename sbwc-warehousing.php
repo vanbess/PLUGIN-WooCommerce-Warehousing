@@ -22,6 +22,8 @@ include SBWH_PATH . 'traits/SBWH_JS.php';
 include SBWH_PATH . 'traits/SBWH_Product_Data.php';
 include SBWH_PATH . 'traits/SBWH_Warehouse_Data.php';
 include SBWH_PATH . 'traits/SBWH_Update_Post.php';
+include SBWH_PATH . 'traits/SBWH_Countries_Shipping.php';
 
 // classes
 include SBWH_PATH . 'classes/SBWH_CPT_Ops.php';
+include SBWH_PATH . 'classes/SBWH_Frontend.php';

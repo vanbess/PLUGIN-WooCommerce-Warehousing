@@ -17,7 +17,8 @@ if (!class_exists('SBWH_CPT_Ops')) :
             SBWH_JS,
             SBWH_Warehouse_Data,
             SBWH_Product_Data,
-            SBWH_Update_Post;
+            SBWH_Update_Post,
+            SBWH_Countries_Shipping;
 
         /**
          * Class init
@@ -42,7 +43,7 @@ if (!class_exists('SBWH_CPT_Ops')) :
             // save/update post meta
             add_action('save_post', [__CLASS__, 'sbwh_update_post'], 10, 2);
         }
-        
+
 
         /**
          * Register CSS and JS scripts
@@ -74,6 +75,7 @@ if (!class_exists('SBWH_CPT_Ops')) :
         { ?>
 
             <div id="sbwh-tabs">
+
                 <!-- tab links -->
                 <ul>
                     <li>
@@ -86,6 +88,11 @@ if (!class_exists('SBWH_CPT_Ops')) :
                             <?php _e('Warehouse Stock', 'woocommerce'); ?>
                         </a>
                     </li>
+                    <li>
+                        <a href="#sbwh-tabs-3">
+                            <?php _e('Countries & Shipping Times', 'woocommerce'); ?>
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- warehouse location data -->
@@ -96,6 +103,11 @@ if (!class_exists('SBWH_CPT_Ops')) :
                 <!-- warehouse product data -->
                 <div id="sbwh-tabs-2">
                     <?php self::sbwh_render_product_data(); ?>
+                </div>
+
+                <!-- warehouse product data -->
+                <div id="sbwh-tabs-3">
+                    <?php self::sbwh_render_countries_shipping(); ?>
                 </div>
 
             </div>

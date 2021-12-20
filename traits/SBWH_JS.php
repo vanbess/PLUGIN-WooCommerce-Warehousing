@@ -21,6 +21,13 @@ if (!trait_exists('SBWH_JS')) :
             <script>
                 jQuery(function($) {
 
+                    // init jQuery tabs
+                    $("#sbwh-tabs").tabs();
+
+                    // *********
+                    // PRODUCTS
+                    // *********
+
                     let autocomp_data = $('#sbwh-products-cont').data('autocomplete');
                     let data_full = $('#sbwh-products-cont').data('full');
 
@@ -44,9 +51,6 @@ if (!trait_exists('SBWH_JS')) :
 
                         }
                     });
-
-                    // init jQuery tabs
-                    $("#sbwh-tabs").tabs();
 
                     // html for inserting additional product stock fields
                     let prod_inputs = '<div class="sbwh-product-input-cont"> ';
@@ -77,13 +81,55 @@ if (!trait_exists('SBWH_JS')) :
 
                                 // set stock qty input to required
                                 $(this).parent().find('.sbwh-stock-qty').attr('required', true);
-                                
+
                             }
                         });
                     });
 
                     // remove product stock set
                     $(document).on('click', '.sbwh-rem-prod', function(e) {
+                        e.preventDefault();
+                        $(this).parent().remove();
+                    });
+                    
+                    // *********
+                    // SHIPPING
+                    // *********
+
+                    // html for inserting additional shipping inputs
+                    let ship_input = '<div class="sbwh-shipping-country-inputs">';
+                    ship_input += '<div class="sbwh-shipping-country-inputs">';
+                    ship_input += '<select name="sbwh-shipping-country[]" class="sbwh-shipping-country" required="">';
+                    ship_input += '<option value=""><?php _e('select country...', 'woocommerce') ?></option>';
+
+                    let countries = $('#sbwh-shipping-countries').data('countries');
+
+                    $.each(countries, function(code, country) {
+                        ship_input += '<option value="' + code + '">' + country + '</option>';
+                    });
+
+                    ship_input += '</select> ';
+                    ship_input += '<input type="text" name="sbwh-shipping-text[]" class="sbwh-shipping-text" placeholder="<?php _e('enter shipping lead time text', 'woocommerce'); ?>" required=""> ';
+                    ship_input += '<label for="sbwh-frontend-display"><b><?php _e('Display on front?', 'woocommerce'); ?></b></label> ';
+                    ship_input += '<select name="sbwh-frontend-display[]" class="sbwh-frontend-display">';
+                    ship_input += '<option value="yes"><?php _e('Yes', 'woocommerce'); ?></option>';
+                    ship_input += '<option value="no"><?php _e('No', 'woocommerce'); ?></option>';
+                    ship_input += '</select> ';
+                    ship_input += '<button class="button button-primary button-small sbwh-add-ship" title="<?php _e('add country', 'woocommerce') ?>">+</button> ';
+                    ship_input += '<button class="button button-default button-small sbwh-rem-ship" title="<?php _e('remove country', 'woocommerce') ?>">-</button>';
+                    ship_input += '</div>';
+
+                    // add shipping input set
+                    $(document).on('click', '.sbwh-add-ship', function(e) {
+                        e.preventDefault();
+
+                        $('#sbwh-shipping-countries').append(ship_input);
+                        $('#sbwh-shipping-countries').find('select:last-child').val('');
+
+                    });
+
+                    // remove shipping input set
+                    $(document).on('click', '.sbwh-rem-ship', function(e) {
                         e.preventDefault();
                         $(this).parent().remove();
                     });

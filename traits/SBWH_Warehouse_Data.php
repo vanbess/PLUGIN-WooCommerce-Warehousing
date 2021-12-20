@@ -17,7 +17,7 @@ if (!trait_exists('SBWH_Warehouse_Data')) :
         public static function sbwh_render_warehouse_data()
         {
 
-            global $post, $post_data;
+            global $post;
 
             // retrieve countries list - used for generating country/region dropdown options
             $wc_countries = new WC_Countries;

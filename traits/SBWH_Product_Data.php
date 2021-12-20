@@ -40,19 +40,44 @@ if (!trait_exists('SBWH_Product_Data')) :
                     <i><b><?php _e('Add warehouse products manually below, OR fetch warehouse products at the bottom of this tab if you have API credentials for warehouse stock database', 'woocommerce'); ?></b></i>
                 </p>
 
-                <?php foreach ($prod_skus as $index => $sku) : ?>
+                <?php if ($prod_skus  && !empty($prod_skus)) : ?>
+                    <?php foreach ($prod_skus as $index => $sku) : ?>
+
+                        <!-- individual product container -->
+                        <div class="sbwh-product-input-cont">
+
+                            <!-- sku input -->
+                            <input name="sbwh-sku[]" class="sbwh-sku" type="text" placeholder="<?php _e('type to search', 'woocommerce') ?>" value="<?php echo $sku; ?>">
+
+                            <!-- product title -->
+                            <input readonly type="text" name="sbwh-prod-title[]" class="sbwh-prod-title" placeholder="<?php _e('product title', 'woocommerce'); ?>" value="<?php echo $prod_titles[$index]; ?>">
+
+                            <!-- stock qty -->
+                            <input type="number" name="sbwh-stock-qty[]" class="sbwh-stock-qty" step="1" min="0" placeholder="<?php _e('stock qty', 'woocommerce'); ?>" value="<?php echo $prod_stock_qtys[$index]; ?>">
+
+                            <!-- add product input set -->
+                            <button class="button button-primary button-small sbwh-add-prod" title="<?php _e('add product', 'woocommerce'); ?>">+</button>
+
+                            <!-- remove product input set -->
+                            <button class="button button-default button-small sbwh-rem-prod" title="<?php _e('remove product', 'woocommerce'); ?>">-</button>
+                        </div>
+
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <?php if (!$prod_skus || empty($prod_skus)) : ?>
 
                     <!-- individual product container -->
                     <div class="sbwh-product-input-cont">
 
                         <!-- sku input -->
-                        <input name="sbwh-sku[]" class="sbwh-sku" type="text" placeholder="<?php _e('type to search', 'woocommerce') ?>" value="<?php echo $sku; ?>">
+                        <input name="sbwh-sku[]" class="sbwh-sku" type="text" placeholder="<?php _e('type to search', 'woocommerce') ?>">
 
                         <!-- product title -->
-                        <input readonly type="text" name="sbwh-prod-title[]" class="sbwh-prod-title" placeholder="<?php _e('product title', 'woocommerce'); ?>" value="<?php echo $prod_titles[$index]; ?>">
+                        <input readonly type="text" name="sbwh-prod-title[]" class="sbwh-prod-title" placeholder="<?php _e('product title', 'woocommerce'); ?>">
 
                         <!-- stock qty -->
-                        <input type="number" name="sbwh-stock-qty[]" class="sbwh-stock-qty" step="1" min="0" placeholder="<?php _e('stock qty', 'woocommerce'); ?>" value="<?php echo $prod_stock_qtys[$index]; ?>">
+                        <input type="number" name="sbwh-stock-qty[]" class="sbwh-stock-qty" step="1" min="0" placeholder="<?php _e('stock qty', 'woocommerce'); ?>">
 
                         <!-- add product input set -->
                         <button class="button button-primary button-small sbwh-add-prod" title="<?php _e('add product', 'woocommerce'); ?>">+</button>
@@ -61,26 +86,8 @@ if (!trait_exists('SBWH_Product_Data')) :
                         <button class="button button-default button-small sbwh-rem-prod" title="<?php _e('remove product', 'woocommerce'); ?>">-</button>
                     </div>
 
-                <?php endforeach; ?>
+                <?php endif; ?>
 
-                <!-- individual product container -->
-                <div class="sbwh-product-input-cont">
-
-                    <!-- sku input -->
-                    <input name="sbwh-sku[]" class="sbwh-sku" type="text" placeholder="<?php _e('type to search', 'woocommerce') ?>">
-
-                    <!-- product title -->
-                    <input readonly type="text" name="sbwh-prod-title[]" class="sbwh-prod-title" placeholder="<?php _e('product title', 'woocommerce'); ?>">
-
-                    <!-- stock qty -->
-                    <input type="number" name="sbwh-stock-qty[]" class="sbwh-stock-qty" step="1" min="0"  placeholder="<?php _e('stock qty', 'woocommerce'); ?>">
-
-                    <!-- add product input set -->
-                    <button class="button button-primary button-small sbwh-add-prod" title="<?php _e('add product', 'woocommerce'); ?>">+</button>
-
-                    <!-- remove product input set -->
-                    <button class="button button-default button-small sbwh-rem-prod" title="<?php _e('remove product', 'woocommerce'); ?>">-</button>
-                </div>
             </div>
 
             <hr>
