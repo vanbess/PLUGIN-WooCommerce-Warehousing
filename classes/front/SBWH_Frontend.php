@@ -10,6 +10,8 @@ if (!class_exists('SBWH_Frontend')) :
     class SBWH_Frontend
     {
 
+        use SBWH_Cart_Checkout_Msg;
+
         /**
          * Class init
          *
@@ -17,6 +19,10 @@ if (!class_exists('SBWH_Frontend')) :
          */
         public static function init()
         {
+            // checkout page mod
+            add_filter('woocommerce_cart_item_name', [__CLASS__, 'sbwh_display_ship_message_checkout'], 10, 3);
+
+            // product single mod
             add_action('woocommerce_after_add_to_cart_button', [__CLASS__, 'sbwh_display_ship_msg']);
         }
 
@@ -142,13 +148,13 @@ if (!class_exists('SBWH_Frontend')) :
                     // show variable product shipping message on variation select, if present
                     $('table.variations select').on('change', function() {
 
-                        setTimeout(function(){
+                        setTimeout(function() {
 
                             let sbwh_pids = $('#sbwh-message-pids').val();
                             let selected = $('.variation_id').val();
                             let search = sbwh_pids.search(selected);
                             let out_of_stock = $('.single_add_to_cart_button').hasClass('wc-variation-is-unavailable');
-    
+
                             if (search >= 0 && out_of_stock === false) {
                                 $('#sbwh-shipping-msg').show();
                             } else {
@@ -169,7 +175,6 @@ if (!class_exists('SBWH_Frontend')) :
          */
         private static function sbwh_query_warehouses()
         {
-
 
             $wh_ids = [];
             $wh_skus = [];
@@ -196,12 +201,6 @@ if (!class_exists('SBWH_Frontend')) :
 
             // return $wh_ids;
             return $wh_skus;
-        }
-
-        public static function sbwh_query_wh_products()
-        {
-
-            $wh_ids = self::sbwh_query_wh_products();
         }
     }
 
