@@ -11,7 +11,7 @@ if (!class_exists('SBWH_Frontend')) :
     {
 
         use SBWH_Cart_Checkout_Msg;
-
+ 
         /**
          * Class init
          *
