@@ -64,12 +64,15 @@ trait SBWH_Cart_Checkout_Msg
             endforeach;
         endforeach;
 
-        // if matching skus found, retrieve product ids
+        // if matching skus found, retrieve product ids, else return original item name/bail to avoid any display errors
         $matching_ids = [];
+        
         if (!empty($matching_skus)) :
             foreach ($matching_skus as $msku) :
                 $matching_ids[] = wc_get_product_id_by_sku($msku);
             endforeach;
+        else:
+            return $item_name;
         endif;
 
         // if $final_wh_id exists, retrieve country code array, retrieve warehouse countries array
@@ -95,7 +98,7 @@ trait SBWH_Cart_Checkout_Msg
 
                         if (!empty($message) && $display_settings[$country_pos] === 'yes') :
 
-                            $message_fin = '<p class="sbwh_checkout_ship_message" style="color: #7a9c59; font-weight: 500;">'. $message . '</p>';
+                            $message_fin = '<p class="sbwh_checkout_ship_message" style="color: #7a9c59; font-weight: 500;">' . $message . '</p>';
                             $item_name .= $message_fin;
                             return $item_name;
 
@@ -104,6 +107,5 @@ trait SBWH_Cart_Checkout_Msg
                 endforeach;
             endif;
         endif;
-
     }
 }

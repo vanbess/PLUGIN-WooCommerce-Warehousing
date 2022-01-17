@@ -11,7 +11,7 @@ if (!class_exists('SBWH_Frontend')) :
     {
 
         use SBWH_Cart_Checkout_Msg;
- 
+
         /**
          * Class init
          *
@@ -137,33 +137,38 @@ if (!class_exists('SBWH_Frontend')) :
             <script>
                 jQuery(document).ready(function($) {
 
-                    // show simple product message on page load finish, if present
-                    let prod_type = $('#sbwh-prod-type').val();
+                    let sbwh_pids = $('#sbwh-message-pids').val();
 
-                    if (prod_type === 'simple') {
-                        $('#sbwh-shipping-msg').show();
-                        return;
+                    // only execute of sbwh_pids are present/defined
+                    if (typeof(sbwh_pids) !== 'undefined') {
+
+                        // show simple product message on page load finish, if present
+                        let prod_type = $('#sbwh-prod-type').val();
+
+                        if (prod_type === 'simple') {
+                            $('#sbwh-shipping-msg').show();
+                            return;
+                        }
+
+                        // show variable product shipping message on variation select, if present
+                        $('table.variations select').on('change', function() {
+
+                            setTimeout(function() {
+
+                                let selected = $('.variation_id').val();
+                                let search = sbwh_pids.search(selected);
+                                let out_of_stock = $('.single_add_to_cart_button').hasClass('wc-variation-is-unavailable');
+
+                                if (search >= 0 && out_of_stock === false) {
+                                    $('#sbwh-shipping-msg').show();
+                                } else {
+                                    $('#sbwh-shipping-msg').hide();
+                                }
+
+                            }, 20);
+
+                        });
                     }
-
-                    // show variable product shipping message on variation select, if present
-                    $('table.variations select').on('change', function() {
-
-                        setTimeout(function() {
-
-                            let sbwh_pids = $('#sbwh-message-pids').val();
-                            let selected = $('.variation_id').val();
-                            let search = sbwh_pids.search(selected);
-                            let out_of_stock = $('.single_add_to_cart_button').hasClass('wc-variation-is-unavailable');
-
-                            if (search >= 0 && out_of_stock === false) {
-                                $('#sbwh-shipping-msg').show();
-                            } else {
-                                $('#sbwh-shipping-msg').hide();
-                            }
-
-                        }, 20);
-
-                    });
                 });
             </script>
 <?php }
