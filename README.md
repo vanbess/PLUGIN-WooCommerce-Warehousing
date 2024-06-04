@@ -1,4 +1,4 @@
-## Silverback Dev Studios Warehousing for WooCommerce
+## PLUGIN: Warehousing for WooCommerce
 
 Plugin which adds the ability to add and manage stock/shipping warehouses for internationally shipped products via custom post type 'warehouse'.
 
